@@ -5,6 +5,7 @@ use rand::Rng;
 
 fn main() {
     println!("Guess the number!");
+    println!("Type \"q\" to exit.");
 
     let secret_number: u32 = rand::thread_rng().gen_range(1..=100);
 
@@ -17,9 +18,16 @@ fn main() {
             .read_line(&mut guess)
             .expect("Failed to read line");
 
+        if guess.trim() == "q" {
+            break;
+        }
+
         let guess: u32 = match guess.trim().parse() {
             Ok(num) => num,
-            Err(_) => continue,
+            Err(_) => {
+                println!("Please type in a number");
+                continue;
+            }
         };
 
         println!("You guessed: {guess}");
